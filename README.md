@@ -44,8 +44,8 @@ The ip address is your machine’s IP address. It can for example be retrieved u
 Clone the repo:
 
 ```bash
-git clone https://github.com/your-username/collections-frontend.git
-cd collections-frontend
+git clone https://github.com/Kidist-Abraham/AlphaCollections.git
+cd AlphaCollections
 ```
 
 Install dependencies:
