@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, FlatList, Button,TouchableOpacity, Alert, StyleSheet } from "react-native";
-import { useAuth } from "./contexts/AuthContext"; // adjust path
+import { useAuth } from "./contexts/AuthContext"; 
 import { useRouter } from "expo-router";
 import { Collections, fetchOwnedCollections, deleteCollections } from "./api/collectionsApi";
 import * as FileSystem from "expo-file-system";
 import Constants from "expo-constants";
+import * as Sharing from "expo-sharing";
+
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
+
 
 export default function OwneCcollectionsScreen() {
   const { token } = useAuth();
@@ -32,16 +35,14 @@ export default function OwneCcollectionsScreen() {
   const handleDownload = async (collectionId: number) => {
     if (!token) return;
     try {
-      // 1) Construct the download URL
       const url = `${API_BASE_URL}/contribute/${collectionId}/zip`;
       
-      // 2) We might pick a local path to save
       const localUri = FileSystem.documentDirectory + `collection_${collectionId}_contributions.zip`;
       
-      // 3) Download the file
       const result = await FileSystem.downloadAsync(url, localUri, {
         headers: { Authorization: `Bearer ${token}` },
       });
+      console.log("result:", result);
   
       if (result.status !== 200) {
         Alert.alert("Download failed", "Error downloading zip");
@@ -49,7 +50,14 @@ export default function OwneCcollectionsScreen() {
       }
   
       Alert.alert("Download complete", `File saved to ${result.uri}`);
-      // You could open or share it, e.g. with expo-sharing
+     
+        const canShare = await Sharing.isAvailableAsync();
+        if (canShare) {
+          await Sharing.shareAsync(result.uri);
+        } else {
+          Alert.alert("No Sharing", "Your device does not support sharing files");
+        }
+      
     } catch (error) {
       console.error("Download collection zip error:", error);
       Alert.alert("Error", "Failed to download contributions");
@@ -61,7 +69,6 @@ export default function OwneCcollectionsScreen() {
     try {
       await deleteCollections(collectionId, token);
       Alert.alert("Success", "Collection deleted");
-      // reload the collections
       loadOwnedCollections();
     } catch (error) {
       console.error("Delete collection error:", error);
@@ -78,7 +85,7 @@ export default function OwneCcollectionsScreen() {
       <View style={styles.collectionItem}>
       <TouchableOpacity
         style={styles.collectionItem}
-        onPress={() => router.push(`/collection/${item.id}`)} // Navigate to detail
+        onPress={() => router.push(`/collection/${item.id}`)} 
       >
         <Text style={styles.collectionName}>{item.name}</Text>
         <Text style={styles.collectionDescription}>{item.description}</Text>
@@ -118,12 +125,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "transparent", // let the root gradient show
+    backgroundColor: "transparent",
   },
   title: {
     fontSize: 20,
     marginBottom: 16,
-    color: "#fff", // if you have a dark gradient behind
+    color: "#fff",
   },
   collectionItem: {
     backgroundColor: "#fff",
@@ -131,7 +138,6 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 12,
 
-    // shadows
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.15,

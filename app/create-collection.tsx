@@ -26,7 +26,6 @@ export default function CreateCollectionScreen() {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const collection = response.data;
-      // Navigate to the collection screen
       router.push(`/collection/${collection.id}`);
     } catch (error: any) {
       console.error("Error creating collection:", error);
@@ -57,7 +56,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    backgroundColor: "transparent", // let any gradient show through
+    backgroundColor: "transparent",
     justifyContent: "center",
   },
   input: {

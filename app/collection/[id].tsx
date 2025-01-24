@@ -4,6 +4,7 @@ import { View, Text, Button, Alert, StyleSheet, TouchableOpacity } from "react-n
 import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "expo-router";
 import * as Clipboard from "expo-clipboard";
 import Constants from "expo-constants";
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
@@ -21,6 +22,7 @@ export default function CollectionScreen() {
 
   const [collection, setCollection] = useState<Collection | null>(null);
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
   // Load the collection details
   const loadCollection = async () => {
@@ -43,20 +45,14 @@ export default function CollectionScreen() {
     loadCollection();
   }, [id]);
 
-  // Copy the link
   const handleCopyLink = async () => {
     const shareLink = `${FRONTED_BASE_URL}/contribute/${id}`;
     await Clipboard.setStringAsync(shareLink);
     Alert.alert("Copied", `Link: ${shareLink}`);
   };
 
-  // Go to Contribute
   const handleContribute = () => {
-    // EITHER navigate to a "Contribute" screen if you have one:
-    // router.push(`/contribute/${id}`);
-    // OR if your route for canvas is different, do that:
-    // For demonstration, let's just show an alert or your logic
-    Alert.alert("Contribute", `Would navigate to Contribute for collection ${id} now.`);
+    router.push(`/contribute/${id}`);
   };
 
   if (loading) {

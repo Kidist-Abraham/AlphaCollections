@@ -18,7 +18,7 @@ export default function RegisterScreen() {
       });
       router.replace("/");
     } catch (error: any) {
-      console.error("Register error:", error); // Log full error for debugging
+      console.error("Register error:", error);
       const errorMessage =
         error.response?.data?.message || "An unexpected error occurred";
       Alert.alert("Registration Failed", errorMessage);
@@ -49,7 +49,6 @@ export default function RegisterScreen() {
 
 
 const styles = StyleSheet.create({
-    // Make the container transparent so the gradient from RootLayout shows through.
     container: {
       flex: 1,
       justifyContent: "center",
@@ -60,7 +59,7 @@ const styles = StyleSheet.create({
       fontSize: 24,
       marginBottom: 20,
       textAlign: "center",
-      color: "#fff", // If your gradient is dark, use a lighter text color
+      color: "#fff", 
     },
     input: {
       borderWidth: 1,

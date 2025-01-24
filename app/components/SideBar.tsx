@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useAuth } from "../contexts/AuthContext"; // adjust path
+import { useAuth } from "../contexts/AuthContext";
 import { useRouter } from "expo-router";
 
 interface SidebarProps {
@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
   sidebarContainer: {
     flex: 1,
     width: 250,
-    backgroundColor: "#f5f5f5", // Contrasting background color
+    backgroundColor: "#f5f5f5",
     padding: 20,
 
     // Shadows for iOS

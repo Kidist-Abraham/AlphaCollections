@@ -23,18 +23,15 @@ export default function RootLayout() {
   return (
     <AuthProvider>
       <View style={{ flex: 1 }}>
-        {/* Gradient behind everything */}
         <LinearGradient
           colors={["#70b7e6", "#25337a"]} 
           style={StyleSheet.absoluteFillObject}
         />
 
-        {/* Hamburger Button */}
         <View style={styles.hamburgerContainer}>
           <Button title="☰" onPress={toggleSidebar} />
         </View>
 
-        {/* Sliding Sidebar */}
         <Animated.View
           style={[
             styles.sidebarWrapper,
@@ -44,11 +41,10 @@ export default function RootLayout() {
           <Sidebar onClose={closeSidebar} />
         </Animated.View>
 
-        {/* Transparent screens */}
         <Stack
           screenOptions={{
             contentStyle: { 
-              backgroundColor: "transparent", // crucial!
+              backgroundColor: "transparent",
             },
           }}
         />

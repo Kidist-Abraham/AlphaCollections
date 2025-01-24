@@ -19,7 +19,7 @@ export default function LoginScreen() {
         password,
       });
       const { token } = response.data;
-      login(token); // Save token to AuthContext
+      login(token);
       router.push("/home");
     } catch (error: any) {
       const errorMessage =
@@ -35,7 +35,7 @@ export default function LoginScreen() {
         style={styles.input}
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text.toLowerCase())}
         keyboardType="email-address"
       />
       <TextInput
@@ -50,7 +50,7 @@ export default function LoginScreen() {
       <View style={styles.buttonContainer}>
         <Button
           title="Register"
-          onPress={() => router.push("/register")} // Navigate to Register page
+          onPress={() => router.push("/register")} 
           color="#4CAF50"
         />
       </View>
@@ -59,7 +59,6 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  // Make the container transparent so the gradient from RootLayout shows through.
   container: {
     flex: 1,
     justifyContent: "center",
@@ -70,7 +69,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     textAlign: "center",
-    color: "#fff", // If your gradient is dark, use a lighter text color
+    color: "#fff", 
   },
   input: {
     borderWidth: 1,

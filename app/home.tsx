@@ -2,7 +2,7 @@
 import React from "react";
 import { View, Text, Button, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
-import { useAuth } from "./contexts/AuthContext"; // adjust path
+import { useAuth } from "./contexts/AuthContext"; 
 
 export default function HomeScreen() {
   const { token } = useAuth();
@@ -15,20 +15,17 @@ export default function HomeScreen() {
         Contribute or Download from Symbol data!
       </Text>
 
-      {/* Button to SearchCollectionsScreen */}
       <Button
         title="Search Collections"
         onPress={() => router.push("/search")}
       />
 
-      {/* Existing create collection button */}
       <Button
         title="Create Collection"
         onPress={() => router.push({ pathname: "/create-collection", params: { token } })}
         color="#4CAF50"
       />
 
-      {/* You can add more "homely" elements here */}
       <View style={styles.infoContainer}>
         <Text style={styles.infoText}>
           Tips, announcements, or other content for the user can go here.

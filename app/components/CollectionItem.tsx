@@ -1,17 +1,13 @@
-// Example: CollectionList.tsx (or your HomeScreen / SearchScreen)
 import React from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import {  Collections } from "../api/collectionsApi";
 
 
-// This is the item in the FlatList's renderItem
 export function CollectionItem({ item }: { item: Collections }) {
   const router = useRouter();
 
   const handlePress = () => {
-    // Navigate to collection detail, passing the collectionId
-    // We'll create a route: /collection/[id].tsx
     router.push(`/collection/${item.id}`);
   };
 

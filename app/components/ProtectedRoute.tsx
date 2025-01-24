@@ -10,7 +10,7 @@ export const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true); // Mark as mounted
+    setIsMounted(true); 
   }, []);
 
   // Ensure no navigation before mounting

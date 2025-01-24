@@ -15,7 +15,7 @@ import { useAuth } from "./contexts/AuthContext";
 export default function SearchCollectionsScreen() {
   console.log("Rendering SearchCollectionsScreen");
 
-  const { token } = useAuth(); // Hook usage at top
+  const { token } = useAuth();
   const [collections, setCollections] = useState<Collections[]>([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(10);

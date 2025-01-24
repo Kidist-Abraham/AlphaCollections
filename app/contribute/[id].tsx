@@ -11,14 +11,14 @@ import {
 import Canvas from "react-native-canvas";
 import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
-import { useAuth } from "./contexts/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 import Constants from "expo-constants";
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
 
 export default function ContributeScreen() {
   const { token } = useAuth();
-  const { collectionId } = useLocalSearchParams() as { collectionId: string };
+  const { id } = useLocalSearchParams() as { id: string };
 
   const canvasRef = useRef<Canvas | null>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
@@ -54,8 +54,8 @@ export default function ContributeScreen() {
     onPanResponderMove: (evt) => {
       if (ctx) {
         const { locationX, locationY } = evt.nativeEvent;
-        ctx.lineTo(locationX, locationY); // Draw a line to the touched point
-        ctx.stroke(); // Render the line
+        ctx.lineTo(locationX, locationY); 
+        ctx.stroke();
       }
     },
     onPanResponderRelease: () => {
@@ -77,7 +77,7 @@ export default function ContributeScreen() {
       const base64Image = dataUrl.split(",")[1];
 
       await axios.post(
-        `${API_BASE_URL}/contribute/${collectionId}`,
+        `${API_BASE_URL}/contribute/${id}`,
         { image: base64Image },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -89,7 +89,6 @@ export default function ContributeScreen() {
     }
   };
 
-  // Debugging useEffect to check initialization
   useEffect(() => {
     if (!canvasRef.current) {
       console.error("Canvas reference is still null after rendering.");
@@ -100,12 +99,10 @@ export default function ContributeScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Contribute Drawing</Text>
 
-      {/* Canvas container with touch handlers */}
       <View style={styles.canvasContainer} {...panResponder.panHandlers}>
         <Canvas ref={handleCanvasRef} style={styles.canvas} />
       </View>
 
-      {/* Floating Save Button */}
       <TouchableOpacity
         style={[styles.floatingButton, !isCanvasReady && { backgroundColor: "#ccc" }]}
         onPress={handleSave}
