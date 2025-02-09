@@ -12,6 +12,7 @@ import Canvas from "react-native-canvas";
 import { useLocalSearchParams } from "expo-router";
 import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
+import { useRouter } from "expo-router";
 
 import Constants from "expo-constants";
 const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
@@ -19,7 +20,7 @@ const API_BASE_URL = Constants.expoConfig?.extra?.API_BASE_URL;
 export default function ContributeScreen() {
   const { token } = useAuth();
   const { id } = useLocalSearchParams() as { id: string };
-
+  const router = useRouter();
   const canvasRef = useRef<Canvas | null>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D | null>(null);
   const [isCanvasReady, setIsCanvasReady] = useState(false);
@@ -83,6 +84,7 @@ export default function ContributeScreen() {
       );
 
       Alert.alert("Success", "Image uploaded successfully");
+      router.push(`/contribute/${id}`);
     } catch (error: any) {
       console.error(error);
       Alert.alert("Error", "Failed to save or upload the drawing.");
